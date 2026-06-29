@@ -1,10 +1,38 @@
-import { useState } from "react";
+import { useState, type ReactNode } from "react";
 import { MarketGrid } from "./components/MarketGrid";
 
-type Tab = "all" | "collections";
+type TabDef = {
+  id: string;
+  label: string;
+  render: () => ReactNode;
+};
+
+// Add a new tab by adding an entry here — no other changes needed.
+const TABS: TabDef[] = [
+  {
+    id: "all",
+    label: "All Items",
+    render: () => <MarketGrid />,
+  },
+  {
+    id: "collections",
+    label: "Collections",
+    render: () => (
+      // PULSE-3: replace this placeholder with <CollectionGrid />
+      <div className="placeholder">
+        <p>Collection View coming soon.</p>
+        <p className="muted">
+          Browse items grouped by collection to improve discovery.
+        </p>
+      </div>
+    ),
+  },
+];
 
 export default function App() {
-  const [tab, setTab] = useState<Tab>("all");
+  const [activeId, setActiveId] = useState<string>(TABS[0].id);
+
+  const activeTab = TABS.find((t) => t.id === activeId) ?? TABS[0];
 
   return (
     <div className="app">
@@ -17,33 +45,18 @@ export default function App() {
       </header>
 
       <nav className="tabs">
-        <button
-          className={tab === "all" ? "tab active" : "tab"}
-          onClick={() => setTab("all")}
-        >
-          All Items
-        </button>
-        <button
-          className={tab === "collections" ? "tab active" : "tab"}
-          onClick={() => setTab("collections")}
-        >
-          Collections
-        </button>
+        {TABS.map((t) => (
+          <button
+            key={t.id}
+            className={t.id === activeId ? "tab active" : "tab"}
+            onClick={() => setActiveId(t.id)}
+          >
+            {t.label}
+          </button>
+        ))}
       </nav>
 
-      <main className="content">
-        {tab === "all" ? (
-          <MarketGrid />
-        ) : (
-          // PULSE-3: replace this placeholder with <CollectionGrid />
-          <div className="placeholder">
-            <p>Collection View coming soon.</p>
-            <p className="muted">
-              Browse items grouped by collection to improve discovery.
-            </p>
-          </div>
-        )}
-      </main>
+      <main className="content">{activeTab.render()}</main>
     </div>
   );
 }
