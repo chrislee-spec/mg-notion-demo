@@ -52,18 +52,17 @@ body {
 .card-collection { color: var(--muted); font-size: 13px; }
 .rarity { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
 
-.collections-head { margin-bottom: 24px; }
 .section-title { font-size: 20px; margin: 0 0 4px; letter-spacing: -0.01em; }
 
-.collection-list { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px; }
-.collection-row {
-  display: flex; justify-content: space-between; align-items: center;
-  background: var(--panel); border: 1px solid var(--border);
-  border-radius: 10px; padding: 14px 16px; transition: border-color 0.15s;
-}
-.collection-row:hover { border-color: var(--accent); }
-.collection-name { font-weight: 600; font-size: 15px; }
 .collection-count { color: var(--muted); font-size: 13px; }
+
+/* PULSE-3: grouped collection sections */
+.collection-sections { display: flex; flex-direction: column; gap: 32px; }
+.collection-section-head {
+  display: flex; align-items: baseline; gap: 10px; margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 1px solid var(--border);
+}
+.collection-section-head .section-title { margin: 0; }
 
 .placeholder {
   padding: 56px 24px;
