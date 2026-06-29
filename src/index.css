@@ -1,0 +1,57 @@
+:root {
+  --bg: #0d1017;
+  --panel: #161b26;
+  --border: #232a39;
+  --text: #e6eaf2;
+  --muted: #8b9bb4;
+  --accent: #5b8cff;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+.app { max-width: 1040px; margin: 0 auto; padding: 32px 24px 64px; }
+
+.header { margin-bottom: 24px; }
+.brand { display: flex; align-items: center; gap: 12px; }
+.logo { color: var(--accent); font-size: 22px; }
+.header h1 { font-size: 28px; margin: 0; letter-spacing: -0.02em; }
+.tagline { color: var(--muted); margin: 6px 0 0; font-size: 14px; }
+
+.tabs { display: flex; gap: 8px; border-bottom: 1px solid var(--border); margin-bottom: 24px; }
+.tab {
+  background: none; border: none; color: var(--muted);
+  padding: 10px 4px; margin-right: 16px; cursor: pointer;
+  font-size: 15px; border-bottom: 2px solid transparent;
+}
+.tab.active { color: var(--text); border-bottom-color: var(--accent); }
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 16px;
+}
+
+.card {
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; transition: border-color 0.15s;
+}
+.card:hover { border-color: var(--accent); }
+.card-art { height: 120px; width: 100%; }
+.card-body { padding: 12px 14px 14px; }
+.card-row { display: flex; justify-content: space-between; align-items: center; }
+.card-row + .card-row { margin-top: 6px; }
+.card-name { font-weight: 600; font-size: 15px; }
+.card-price { color: var(--accent); font-weight: 600; font-size: 14px; }
+.card-collection { color: var(--muted); font-size: 13px; }
+.rarity { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; }
+
+.placeholder { padding: 64px 0; text-align: center; }
+.placeholder p { margin: 4px 0; }
+.muted { color: var(--muted); font-size: 14px; }
