@@ -1,10 +1,16 @@
 import { useState, type ReactNode } from "react";
 import { MarketGrid } from "./components/MarketGrid";
+import { SettlementToast } from "./components/SettlementToast";
+import type { MarketItem } from "./data/items";
+
+type TabContext = {
+  onBuy: (item: MarketItem) => void;
+};
 
 type TabDef = {
   id: string;
   label: string;
-  render: () => ReactNode;
+  render: (ctx: TabContext) => ReactNode;
 };
 
 // Add a new tab by adding an entry here — no other changes needed.
@@ -12,7 +18,7 @@ const TABS: TabDef[] = [
   {
     id: "all",
     label: "All Items",
-    render: () => <MarketGrid />,
+    render: ({ onBuy }) => <MarketGrid onBuy={onBuy} />,
   },
   {
     id: "collections",
@@ -44,8 +50,19 @@ const TABS: TabDef[] = [
 
 export default function App() {
   const [activeId, setActiveId] = useState<string>(TABS[0].id);
+  const [purchase, setPurchase] = useState<{
+    item: MarketItem;
+    willFail: boolean;
+    nonce: number;
+  } | null>(null);
 
   const activeTab = TABS.find((t) => t.id === activeId) ?? TABS[0];
+
+  // Visual simulation only (PULSE-12) — randomly exercise the retry path on
+  // ~half of purchases to demonstrate settlement hardening. No real payment.
+  const handleBuy = (item: MarketItem) => {
+    setPurchase({ item, willFail: Math.random() < 0.5, nonce: Date.now() });
+  };
 
   return (
     <div className="app">
@@ -69,7 +86,16 @@ export default function App() {
         ))}
       </nav>
 
-      <main className="content">{activeTab.render()}</main>
+      <main className="content">{activeTab.render({ onBuy: handleBuy })}</main>
+
+      {purchase && (
+        <SettlementToast
+          key={purchase.nonce}
+          item={purchase.item}
+          willFail={purchase.willFail}
+          onClose={() => setPurchase(null)}
+        />
+      )}
     </div>
   );
 }
