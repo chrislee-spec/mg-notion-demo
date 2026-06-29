@@ -1,5 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { MarketGrid } from "./components/MarketGrid";
+import { getCollections } from "./api/collections";
 import { SettlementToast } from "./components/SettlementToast";
 import type { MarketItem } from "./data/items";
 
@@ -23,28 +24,32 @@ const TABS: TabDef[] = [
   {
     id: "collections",
     label: "Collections",
-    render: () => (
-      // PULSE-1: section scaffold + empty state. PULSE-2/PULSE-3 fill this
-      // <section> with grouped collection data and the CollectionGrid.
-      <section className="collections">
-        <header className="collections-head">
-          <h2 className="section-title">Collections</h2>
-          <p className="muted">
-            Browse items grouped by collection — Genesis, Neon Series,
-            Founders Pack, and Pulse Originals.
-          </p>
-        </header>
-        <div className="placeholder">
-          <div className="empty-icon" aria-hidden="true">
-            ◢◣
-          </div>
-          <p>No collections to show yet.</p>
-          <p className="muted">
-            Grouped collection browsing is on the way — check back soon.
-          </p>
-        </div>
-      </section>
-    ),
+    render: () => {
+      // PULSE-2: list each collection name with its item count. PULSE-3 will
+      // replace this list with the grouped CollectionGrid of item cards.
+      const collections = getCollections();
+      return (
+        <section className="collections">
+          <header className="collections-head">
+            <h2 className="section-title">Collections</h2>
+            <p className="muted">
+              Browse items grouped by collection — {collections.length}{" "}
+              collections in the marketplace.
+            </p>
+          </header>
+          <ul className="collection-list">
+            {collections.map((c) => (
+              <li key={c.collection} className="collection-row">
+                <span className="collection-name">{c.collection}</span>
+                <span className="collection-count">
+                  {c.items.length} {c.items.length === 1 ? "item" : "items"}
+                </span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    },
   },
 ];
 
