@@ -35,15 +35,19 @@ When asked to work on an issue (e.g. "start PULSE-7"):
 ## Opening the PR
 - Commit, push the branch, and open the PR with `gh`.
 - **The PR title MUST start with the issue ID**, e.g. `PULSE-7 Add marketplace search bar`.
-  This is what makes the link work: the Issues <-> Pull Requests relation auto-maps the PR to the
-  Issue whose Unique ID matches the `PULSE-n` in the title. If you omit the ID, it will not map.
+  The `PULSE-n` prefix is how you identify which Issue a synced PR record belongs to when you set
+  the relation by hand (see "Linking back to Notion" below). Do not omit it.
 - In the PR body, summarize what changed and reference the acceptance criteria.
 
 ## Linking back to Notion
-The PR-to-Issue relation **auto-maps** from the `PULSE-n` in the PR title — you do NOT set the
-relation by hand. Your only manual step via MCP is to walk the **Status**:
-1. Set Status to **Review** once the PR is open.
-2. If the auto-mapped relation hasn't appeared yet, leave it — it maps once the PR syncs into Notion.
+The GitHub→Notion sync imports the PR into the **Pull Requests** database automatically, but it
+does **NOT** auto-map the PR to its Issue from the `PULSE-n` title — the synced PR record lands
+with an empty `Issue` relation. You must connect them by hand. After opening the PR, via MCP:
+1. Set the Issue **Status** to **Review**.
+2. Find the synced PR record in the Pull Requests data source (match on `PR Number`), then set the
+   Issue's **`Pull Request`** relation to that PR record. Notion mirrors it to the PR's `Issue`
+   field automatically. Verify both sides.
+   - If the PR hasn't synced into Notion yet, wait for it to appear, then set the relation.
 
 ## Finishing (after merge)
 - Set the Issue **Status** to **Done**.
