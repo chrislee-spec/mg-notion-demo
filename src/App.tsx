@@ -18,13 +18,26 @@ const TABS: TabDef[] = [
     id: "collections",
     label: "Collections",
     render: () => (
-      // PULSE-3: replace this placeholder with <CollectionGrid />
-      <div className="placeholder">
-        <p>Collection View coming soon.</p>
-        <p className="muted">
-          Browse items grouped by collection to improve discovery.
-        </p>
-      </div>
+      // PULSE-1: section scaffold + empty state. PULSE-2/PULSE-3 fill this
+      // <section> with grouped collection data and the CollectionGrid.
+      <section className="collections">
+        <header className="collections-head">
+          <h2 className="section-title">Collections</h2>
+          <p className="muted">
+            Browse items grouped by collection — Genesis, Neon Series,
+            Founders Pack, and Pulse Originals.
+          </p>
+        </header>
+        <div className="placeholder">
+          <div className="empty-icon" aria-hidden="true">
+            ◢◣
+          </div>
+          <p>No collections to show yet.</p>
+          <p className="muted">
+            Grouped collection browsing is on the way — check back soon.
+          </p>
+        </div>
+      </section>
     ),
   },
 ];
