@@ -7,7 +7,13 @@ const rarityColor: Record<string, string> = {
   Legendary: "#f59e0b",
 };
 
-export function ItemCard({ item }: { item: MarketItem }) {
+export function ItemCard({
+  item,
+  onBuy,
+}: {
+  item: MarketItem;
+  onBuy?: (item: MarketItem) => void;
+}) {
   return (
     <div className="card">
       <div
@@ -29,6 +35,11 @@ export function ItemCard({ item }: { item: MarketItem }) {
             {item.rarity}
           </span>
         </div>
+        {onBuy && (
+          <button className="buy-btn" onClick={() => onBuy(item)}>
+            Buy
+          </button>
+        )}
       </div>
     </div>
   );

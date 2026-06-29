@@ -65,3 +65,42 @@ body {
 .placeholder p { margin: 4px 0; }
 .empty-icon { color: var(--accent); font-size: 28px; margin-bottom: 12px; }
 .muted { color: var(--muted); font-size: 14px; }
+
+/* PULSE-12: Buy button + settlement toast */
+.buy-btn {
+  margin-top: 12px; width: 100%;
+  background: var(--accent); color: #0d1017;
+  border: none; border-radius: 8px; padding: 8px 0;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: filter 0.15s;
+}
+.buy-btn:hover { filter: brightness(1.08); }
+.buy-btn:active { filter: brightness(0.94); }
+
+.toast {
+  position: fixed; left: 50%; bottom: 28px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 12px;
+  background: var(--panel); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 18px; min-width: 320px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45); z-index: 50;
+}
+.toast-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.toast-text { display: flex; flex-direction: column; gap: 2px; }
+.toast-title { font-size: 14px; font-weight: 600; }
+.toast-sub { font-size: 12px; color: var(--muted); }
+.toast-status {
+  margin-left: auto; font-size: 12px; font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.04em;
+}
+
+.toast-pending .toast-dot { background: var(--accent); animation: toast-pulse 1s ease-in-out infinite; }
+.toast-pending .toast-status { color: var(--accent); }
+.toast-retrying .toast-dot { background: #f59e0b; animation: toast-pulse 0.6s ease-in-out infinite; }
+.toast-retrying .toast-status { color: #f59e0b; }
+.toast-settled .toast-dot { background: #22c55e; }
+.toast-settled .toast-status { color: #22c55e; }
+
+@keyframes toast-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
