@@ -1,6 +1,6 @@
 import { useState, type ReactNode } from "react";
 import { MarketGrid } from "./components/MarketGrid";
-import { getCollections } from "./api/collections";
+import { CollectionGrid } from "./components/CollectionGrid";
 import { SettlementToast } from "./components/SettlementToast";
 import type { MarketItem } from "./data/items";
 
@@ -24,32 +24,8 @@ const TABS: TabDef[] = [
   {
     id: "collections",
     label: "Collections",
-    render: () => {
-      // PULSE-2: list each collection name with its item count. PULSE-3 will
-      // replace this list with the grouped CollectionGrid of item cards.
-      const collections = getCollections();
-      return (
-        <section className="collections">
-          <header className="collections-head">
-            <h2 className="section-title">Collections</h2>
-            <p className="muted">
-              Browse items grouped by collection — {collections.length}{" "}
-              collections in the marketplace.
-            </p>
-          </header>
-          <ul className="collection-list">
-            {collections.map((c) => (
-              <li key={c.collection} className="collection-row">
-                <span className="collection-name">{c.collection}</span>
-                <span className="collection-count">
-                  {c.items.length} {c.items.length === 1 ? "item" : "items"}
-                </span>
-              </li>
-            ))}
-          </ul>
-        </section>
-      );
-    },
+    // PULSE-3: grouped browsing view — one section of item cards per collection.
+    render: ({ onBuy }) => <CollectionGrid onBuy={onBuy} />,
   },
 ];
 
